@@ -11,7 +11,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000") // React frontend
 public class ComplaintController {
 
-    private final ComplaintService service;
+     private final ComplaintService service;
 
     public ComplaintController(ComplaintService service) {
         this.service = service;
