@@ -1,0 +1,38 @@
+name: Backend CI with SonarQube
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your backend code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Cache Maven dependencies for faster build
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+      # 4. Build backend and run SonarCloud analysis
+      - name: Build & run SonarCloud analysis
+        run: |
+          mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=prawin0614_feedback-backend \
+            -Dsonar.organization=prawin0614 \
+            -Dsonar.host.url=$SONAR_HOST_URL
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
