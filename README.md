@@ -17,7 +17,7 @@ This backend is hosted on Render **Free Plan**.
 
 ---
 ## 📊 Project Presentation
-👉 [Download Project PPT](./Complaint_Management_System.pptx)
+👉 [Download Project PPT](https://github.com/prawin0614/feedback-backend/blob/main/Complaint-Management-System.pptx)
 
 ## 🛠️ Tech Stack
 
