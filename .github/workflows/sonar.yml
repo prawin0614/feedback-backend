@@ -1,38 +1,45 @@
-name: Backend CI with SonarQube
+name: SonarCloud Analysis
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
+    name: Build and Analyze
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout your backend code
-      - name: Checkout code
+      # 1️⃣ Code checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup JDK 17
+      # 2️⃣ Java setup (Spring Boot ku correct)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. Cache Maven dependencies for faster build
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      # 3️⃣ Maven wrapper permission (VERY IMPORTANT)
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
 
-      # 4. Build backend and run SonarCloud analysis
-      - name: Build & run SonarCloud analysis
-        run: |
-          mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=prawin0614_feedback-backend \
-            -Dsonar.organization=prawin0614 \
-            -Dsonar.host.url=$SONAR_HOST_URL
+      # 4️⃣ Maven build ONLY (Sonar skip pannrom)
+      - name: Build backend (skip sonar)
+        run: ./mvnw -B clean verify -Dsonar.skip=true
+
+      # 5️⃣ SonarCloud Analysis (ONLY here)
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=prawin0614_feedback-backend
+            -Dsonar.organization=prawin0614
+            -Dsonar.java.binaries=target
