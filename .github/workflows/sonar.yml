@@ -24,12 +24,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
 
-      - name: Build & run SonarCloud analysis
+      - name: Build project
+        run: mvn clean verify
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-        run: |
-          mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=prawin0614_feedback-backend \
-            -Dsonar.organization=prawin0614 \
-            -Dsonar.login=$SONAR_TOKEN
+        with:
+          args: >
+            -Dsonar.projectKey=prawin0614_feedback-backend
+            -Dsonar.organization=prawin0614
