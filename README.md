@@ -16,6 +16,8 @@ This backend is hosted on Render **Free Plan**.
 - Please **open the backend URL once** before using the frontend
 
 ---
+## 📊 Project Presentation
+👉 [Download Project PPT](./Complaint_Management_System.pptx)
 
 ## 🛠️ Tech Stack
 
