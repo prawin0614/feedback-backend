@@ -26,8 +26,6 @@ jobs:
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2-
 
       # 4. Build backend & run SonarCloud analysis
       - name: Build & run SonarCloud analysis
@@ -37,4 +35,5 @@ jobs:
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=prawin0614_feedback-backend \
             -Dsonar.organization=prawin0614 \
+            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
