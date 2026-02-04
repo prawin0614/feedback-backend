@@ -2,31 +2,39 @@ name: Backend CI with SonarCloud
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1️⃣ Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Java 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # 3️⃣ Cache Maven dependencies
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
 
-      - name: Build project
+      # 4️⃣ Build project (NO sonar here)
+      - name: Build backend
         run: mvn clean verify
 
+      # 5️⃣ SonarCloud Scan (official & safe)
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         env:
