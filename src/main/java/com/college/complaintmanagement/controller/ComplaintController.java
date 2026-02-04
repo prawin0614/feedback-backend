@@ -8,7 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/complaints")
-@CrossOrigin(origins = "http://localhost:3000") // React frontend
+@CrossOrigin(origins = {
+    "https://feedback-frontend-ochre.vercel.app",
+    "http://localhost:3000"
+})
+ // React frontend
 public class ComplaintController {
 
      private final ComplaintService service;
