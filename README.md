@@ -7,7 +7,7 @@ It handles complaint storage, status updates, and data management for the applic
 
 ## 🚀 Live Backend URL (Render – Free Plan)
 
-👉 https://feedback-backend-u96e.onrender.com/api/complaints
+👉 https://feedback-backend-u96e.onrender.com/api/complaints ( wait for few seconds run and wait ultil to return [] after check with frontend link)
 
 ⚠️ **Important Note (Render Free Plan):**  
 This backend is hosted on Render **Free Plan**.  
